@@ -6,7 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { CameraView, useCameraPermissions } from "expo-camera";
-import { Audio } from "expo-av";
+import { requestRecordingPermissionsAsync } from "expo-audio";
 import Animated, {
   useSharedValue, useAnimatedStyle, withRepeat, withTiming, withSequence, cancelAnimation,
 } from "react-native-reanimated";
@@ -208,7 +208,7 @@ function AudioDemo({ onBack }: { onBack: () => void }) {
 
   const start = async () => {
     try {
-      const res = await Audio.requestPermissionsAsync();
+      const res = await requestRecordingPermissionsAsync();
       if (!res.granted) {
         RNAlert.alert("Permissão negada", "Habilite o microfone nas configurações.");
         return;
