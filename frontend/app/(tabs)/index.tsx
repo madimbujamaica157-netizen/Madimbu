@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import { useFocusEffect } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import { api, formatMinutes } from "../../src/api";
 import { theme, spacing, radius } from "../../src/theme";
 import { useChildren } from "../../src/ChildContext";
@@ -74,6 +74,29 @@ export default function Dashboard() {
         </View>
 
         <ChildSwitcher />
+
+        {/* Live Monitoring CTA */}
+        <TouchableOpacity
+          testID="live-monitoring-btn"
+          activeOpacity={0.85}
+          onPress={() => router.push({ pathname: "/live", params: { name: selected.name } })}
+          style={styles.liveCta}
+        >
+          <View style={styles.liveIcon}>
+            <Ionicons name="radio" size={20} color="#FFF" />
+          </View>
+          <View style={{ flex: 1 }}>
+            <View style={styles.liveRow}>
+              <Text style={styles.liveTitle}>Monitoramento ao vivo</Text>
+              <View style={styles.liveBadge}>
+                <View style={styles.liveBadgeDot} />
+                <Text style={styles.liveBadgeText}>AO VIVO</Text>
+              </View>
+            </View>
+            <Text style={styles.liveDesc}>Câmera, áudio e espelhamento de tela</Text>
+          </View>
+          <Ionicons name="chevron-forward" size={18} color="#FFF" />
+        </TouchableOpacity>
 
         {/* Status card */}
         <View style={styles.statusCard}>
@@ -204,4 +227,22 @@ const styles = StyleSheet.create({
   weekTrack: { flex: 1, width: "100%", backgroundColor: "#F1F1F1", borderRadius: 4, justifyContent: "flex-end", overflow: "hidden" },
   weekFill: { backgroundColor: theme.ink, width: "100%", borderRadius: 4 },
   weekLabel: { fontSize: 10, color: theme.muted, fontWeight: "600" },
+  liveCta: {
+    flexDirection: "row", alignItems: "center", gap: 12,
+    padding: spacing.md, borderRadius: radius.md, backgroundColor: theme.ink,
+  },
+  liveIcon: {
+    width: 44, height: 44, borderRadius: 12,
+    backgroundColor: "rgba(255,255,255,0.12)",
+    alignItems: "center", justifyContent: "center",
+  },
+  liveRow: { flexDirection: "row", alignItems: "center", gap: 8 },
+  liveTitle: { color: "#FFF", fontSize: 15, fontWeight: "700", flex: 1 },
+  liveBadge: {
+    flexDirection: "row", gap: 4, alignItems: "center",
+    backgroundColor: "#FFF", paddingHorizontal: 6, paddingVertical: 2, borderRadius: radius.pill,
+  },
+  liveBadgeDot: { width: 5, height: 5, borderRadius: 3, backgroundColor: theme.ink },
+  liveBadgeText: { color: theme.ink, fontSize: 8, fontWeight: "800", letterSpacing: 1 },
+  liveDesc: { color: "rgba(255,255,255,0.7)", fontSize: 12, marginTop: 2 },
 });
