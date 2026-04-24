@@ -18,6 +18,7 @@ import ChildSwitcher from "../../src/components/ChildSwitcher";
 
 export default function Dashboard() {
   const { selected } = useChildren();
+  const router = useRouter();
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
